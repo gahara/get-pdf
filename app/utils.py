@@ -1,11 +1,12 @@
-import asyncio
 from pyppeteer import launch
 
 
-async def main():
-    browser = await launch()
+async def get_pdf_with_pypeteer(url):
+    browser = await launch(handleSIGINT=False,
+                           handleSIGTERM=False,
+                           handleSIGHUP=False)
     page = await browser.newPage()
-    await page.goto('https://github.com/gahara')
+    await page.goto(url)
     await page.pdf({
         'path': 'page.pdf',
         'format': 'Letter',
@@ -18,5 +19,3 @@ async def main():
     })
 
     await browser.close()
-
-asyncio.get_event_loop().run_until_complete(main())
